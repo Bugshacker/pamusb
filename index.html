@@ -107,21 +107,6 @@ auth    required                        pam_unix.so nullok_secure
 </code></pre>
 
 <ul>
-<li>Setup <em>su</em> &amp; <em>sudo</em> services to require USB one time password authentication </li>
-</ul><pre><code>&lt;service id="su"&gt;
-                        &lt;device&gt;my-usb-stick&lt;/device&gt;
-                        &lt;option name="enable"&gt;true&lt;option&gt;
-                        &lt;option name="quiet"&gt;true&lt;/option&gt;
-                &lt;/service&gt;
-                &lt;service id="sudo"&gt;
-                        &lt;device&gt;my-usb-stick&lt;/device&gt;
-                        &lt;option name="enable"&gt;true&lt;option&gt;
-                        &lt;option name="quiet"&gt;true&lt;/option&gt;
-                &lt;/service&gt;
-        &lt;/services&gt;
-</code></pre>
-
-<ul>
 <li>Configure the pamusb-agent to startup at Login as a daemon process - under Ubuntu </li>
 </ul><h4>
 <a name="search---startup-applications---add" class="anchor" href="#search---startup-applications---add"><span class="octicon octicon-link"></span></a>SEARCH -&gt; Startup Applications -&gt; Add</h4>
