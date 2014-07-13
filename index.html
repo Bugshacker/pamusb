@@ -53,18 +53,22 @@
 </code></pre>
 
 <ul>
-<li>Install dependencies Fedora/RHEL/CentOS</li>
+<li>Install dependencies Fedora/RHEL/CentOS/Gentoo</li>
 </ul><pre><code>sudo yum -y install libxml2 pam udisks pmount
 </code></pre>
 
 <ul>
 <li>For Fedora/RHEL/CentOS</li>
 </ul><pre><code>git clone https://github.com/aluzzardi/pam_usb.git
-</code></pre>
-
-<pre><code>cd pam_usb
+cd pam_usb
 make 
 make install
+</code></pre>
+
+<ul>
+<li>Gentoo Instructions <a href="https://forums.gentoo.org/viewtopic-t-305540-start-0.html">Gentoo pam_usb</a>
+</li>
+</ul><pre><code>emerge pam_usb
 </code></pre>
 
 <ul>
