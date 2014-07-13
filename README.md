@@ -1,11 +1,34 @@
-#PAMUSB One Time Password Authentication Ubuntu 
+#PAMUSB One Time Password Authentication
 -----------
 
-* Install dependencies 
+####Ubuntu => /etc/pam.d/common-auth 
+
+####Fedora/RHEL/CentOS => /etc/pam.d/system-auth 
+
+* Install dependencies Ubuntu/Debian
 
 ```
-apt-get install libpam-usb pamusb-tools
+sudo apt-get install libpam-usb pamusb-tools
 ```
+
+* Install dependencies Fedora/RHEL/CentOS
+
+```
+sudo yum -y install libxml2 pam udisks pmount
+```
+
+* For Fedora/RHEL/CentOS
+
+```
+git clone https://github.com/aluzzardi/pam_usb.git
+```
+
+```
+cd pam_usb
+make 
+make install
+```
+
 
 * Configure USB Device 
 * 
@@ -26,7 +49,8 @@ pamusb-conf --add-user $some_other_user_name
 pamusb-check root
 ```
 
-* Setup PAM System Authentication process EDIT:  **/etc/pam.d/common-auth** - file should look like this post configuration changing only these lines
+* Setup PAM System Authentication process Ubuntu EDIT:  **/etc/pam.d/common-auth** RHEL/CentOS/Fedora EDIT: **/etc/pam.d/system-auth** 
+  The file should look like this post configuration changing only these lines
 
 ```
 auth    sufficient      pam_usb.so
