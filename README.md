@@ -11,7 +11,7 @@
 sudo apt-get install libpam-usb pamusb-tools
 ```
 
-* Install dependencies Fedora/RHEL/CentOS
+* Install dependencies Fedora/RHEL/CentOS/Gentoo
 
 ```
 sudo yum -y install libxml2 pam udisks pmount
@@ -21,12 +21,15 @@ sudo yum -y install libxml2 pam udisks pmount
 
 ```
 git clone https://github.com/aluzzardi/pam_usb.git
-```
-
-```
 cd pam_usb
 make 
 make install
+```
+
+* Gentoo Instructions [Gentoo pam_usb](https://forums.gentoo.org/viewtopic-t-305540-start-0.html)
+
+```
+emerge pam_usb
 ```
 
 
