@@ -1,4 +1,4 @@
-#PAMUSB One Time Password Authentication
+#PAM USB OTP Authentication
 -----------
 
 ####Ubuntu => /etc/pam.d/common-auth 
