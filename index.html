@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pamusb by alienone</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/alienone/pamusb">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/alienone/pamusb/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/alienone/pamusb/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Pamusb</h1>
+          <p>USB One Time Password Authentication - Ubuntu</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/alienone">alienone</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="pam-usb-otp-authentication" class="anchor" href="#pam-usb-otp-authentication"><span class="octicon octicon-link"></span></a>PAM USB OTP Authentication</h1>
+
+<hr><h4>
+<a name="ubuntu--etcpamdcommon-auth" class="anchor" href="#ubuntu--etcpamdcommon-auth"><span class="octicon octicon-link"></span></a>Ubuntu =&gt; /etc/pam.d/common-auth</h4>
+
+<h4>
+<a name="fedorarhelcentos--etcpamdsystem-auth" class="anchor" href="#fedorarhelcentos--etcpamdsystem-auth"><span class="octicon octicon-link"></span></a>Fedora/RHEL/CentOS =&gt; /etc/pam.d/system-auth</h4>
+
+<ul>
+<li>Install dependencies Ubuntu/Debian</li>
+</ul><pre><code>sudo apt-get install libpam-usb pamusb-tools
+</code></pre>
+
+<ul>
+<li>Install dependencies Fedora/RHEL/CentOS</li>
+</ul><pre><code>sudo yum -y install libxml2 pam udisks pmount
+</code></pre>
+
+<ul>
+<li>For Fedora/RHEL/CentOS</li>
+</ul><pre><code>git clone https://github.com/aluzzardi/pam_usb.git
+</code></pre>
+
+<pre><code>cd pam_usb
+make 
+make install
+</code></pre>
+
+<ul>
+<li>Configure USB Device </li>
+<li>
+</li>
+</ul><pre><code>pamusb-conf --add-device $MY_DEVICE_ALIAS
+</code></pre>
+
+<ul>
+<li>Configure user accounts to authenticate with USB </li>
+</ul><pre><code>pamusb-conf --add-user root
+pamusb-conf --add-user $some_other_user_name
+</code></pre>
+
+<ul>
+<li>Check user account configurations </li>
+</ul><pre><code>pamusb-check root
+</code></pre>
+
+<ul>
+<li>Setup PAM System Authentication process Ubuntu EDIT:  <strong>/etc/pam.d/common-auth</strong> RHEL/CentOS/Fedora EDIT: <strong>/etc/pam.d/system-auth</strong> 
+The file should look like this post configuration changing only these lines</li>
+</ul><pre><code>auth    sufficient      pam_usb.so
+#auth   [success=1 default=ignore]      pam_unix.so nullok_secure try_first_pass
+auth    required                        pam_unix.so nullok_secure
+</code></pre>
+
+<ul>
+<li>Setup screen saver lock upon USB device removal EDIT: <strong>/etc/pamusb.conf</strong> - example syntax format for the <strong>root</strong> user account </li>
+</ul><pre><code>&lt;/user&gt;&lt;user id="root"&gt;
+        &lt;device&gt;falcon-usb-stick&lt;/device&gt;
+        &lt;agent event="lock"&gt;gnome-screensaver-command --lock&lt;/agent&gt;
+        &lt;agent event="unlock"&gt;gnome-screensaver-command --deactivate&lt;/agent&gt;
+&lt;/user&gt;&lt;/users&gt;
+</code></pre>
+
+<ul>
+<li>Setup <em>su</em> &amp; <em>sudo</em> services to require USB one time password authentication </li>
+</ul><pre><code>&lt;service id="su"&gt;
+                        &lt;device&gt;my-usb-stick&lt;/device&gt;
+                        &lt;option name="enable"&gt;true&lt;option&gt;
+                        &lt;option name="quiet"&gt;true&lt;/option&gt;
+                &lt;/service&gt;
+                &lt;service id="sudo"&gt;
+                        &lt;device&gt;my-usb-stick&lt;/device&gt;
+                        &lt;option name="enable"&gt;true&lt;option&gt;
+                        &lt;option name="quiet"&gt;true&lt;/option&gt;
+                &lt;/service&gt;
+        &lt;/services&gt;
+</code></pre>
+
+<ul>
+<li>Configure the pamusb-agent to startup at Login as a daemon process - under Ubuntu </li>
+</ul><h4>
+<a name="search---startup-applications---add" class="anchor" href="#search---startup-applications---add"><span class="octicon octicon-link"></span></a>SEARCH -&gt; Startup Applications -&gt; Add</h4>
+
+<pre><code>/usr/bin/pamusb-agent --daemon
+</code></pre>
+
+<ul>
+<li>Logout &amp; Login - You have now successfully configured utilizing USB removable device as a One Time Password Authentication Mechanism </li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
